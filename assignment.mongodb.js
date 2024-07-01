@@ -68,6 +68,16 @@ use("kec-crud");
 //   { name: 1, averageRating: "$rating.average", _id: 0 }
 // );
 
+//* alternative: (if various $or is being applied on same field than
+//* it can be replaced by $in)
+
+// db.movies.find(
+//   {
+//     "rating.average": { $in: [6, 6.5, 9, 8, 8.5, 8.6, 7.7, 6.1, 7.8] },
+//   },
+//   { name: 1, averageRating: "$rating.average", _id: 0 }
+// );
+
 // ? find movies whose status is neither "Ended" not genres is "Action"
 // db.movies.find(
 //   { $nor: [{ genres: "Action" }, { status: "Ended" }] },
@@ -82,3 +92,12 @@ use("kec-crud");
 
 // ? find movies whose genre size is 3
 // db.movies.find({ genres: { $size: 3 } }, { name: 1, genres: 1, _id: 0 });
+
+// ? find movies whose genres is neither "Thriller" nor "Action"
+
+//* if $nor is being applied for same field of data then it can be replaced by $nin
+
+// db.movies.find(
+//   { genres: { $nin: ["Action", "Thriller"] } },
+//   { name: 1, _id: 0, genres: 1 }
+// );
